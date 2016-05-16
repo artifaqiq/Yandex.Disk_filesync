@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.4
 from src.Configuration import Configuration
 from src.yandex_disk_api import *
 from src.SyncFiles import SyncFiles

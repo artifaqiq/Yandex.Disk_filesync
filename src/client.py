@@ -36,9 +36,9 @@ class Client:
             fname = source_path.split("/")[
                 -1] if dest_path == None else dest_path
 
-            BUFF_SIZE = 1024 ** 2
+            BUFF_SIZE = 1024 * 128
             source = requests.get(href, stream=True)
-            print("Downloaded " + fname + " ...")
+            if mes == True: print(" -- downloading " + fname + " ...")
 
             with open(fname, "wb") as dest:
                 downloaded = 0;
@@ -47,9 +47,10 @@ class Client:
                         dest.write(chunk)
                         downloaded += BUFF_SIZE
                         if (mes == True):
-                            print(" <<< {0} +  MB downloaded".format(
-                                downloaded // 1024 / 1024), end="\r")
-            if (mes == True): print(fname + " successfully downloaded")
+                            print(" -- <<< {0}  MB downloaded ...".format(
+                                round(downloaded // 1024 / 1024, 1)), end="\r")
+            if (mes == True): print(
+                " -- " + fname + " successfully downloaded")
         except YandexDiskException as e:
             return False
         else:
@@ -59,18 +60,15 @@ class Client:
         fname = source_path.split("/")[-1]
         from pathlib import Path
         if (Path(source_path).exists() == False):
-            print(source_path + " don't exists")
+            print(" == " + source_path + " don't exists")
             return False
         if (Path(source_path).is_file() == False):
-            print(source_path + " is not a file")
+            print(" == " + source_path + " is not a file")
             return False
-
         try:
-            if dest_path[-1] == "/":
-                self.disk.upload_file(source_path, dest_path + fname)
-            else:
-                self.disk.upload_file(source_path, dest_path + "/" + fname)
-            print(fname + " successfully uploaded in " + dest_path)
+            sys.stdout.write(" -- uploading " + source_path + " ...\r")
+            self.disk.upload_file(source_path, dest_path)
+            print(" -- " + fname + " successfully uploaded in " + dest_path)
         except YandexDiskException as e:
             raise e
 
@@ -101,31 +99,31 @@ class Client:
         except YandexDiskException as e:
             raise e
 
-    def download_dir(self, source_path, current_path=""):
+    def download_dir(self, source_path, _current_path=""):
         path = Path(source_path.split("/")[-1])
-        if current_path == "": current_path = str(path)
-        print("make directory " + current_path)
+        if _current_path == "": _current_path = str(path)
+        print("make directory " + _current_path)
         if path.exists():
             print(
-                "removing existing local directory " + current_path + "/ ...")
+                "removing existing local directory " + _current_path + "/ ...")
             try:
                 print(" ::: " + path.absolute())
                 import shutil
                 shutil.rmtree(path.absolute())
             except Exception:
                 print(
-                    "local directory " + current_path + "/ can not be removed")
+                    "local directory " + _current_path + "/ can not be removed")
                 return False
-        Path(current_path).mkdir()
+        Path(_current_path).mkdir()
         try:
             files = self.disk.get_content_of_folder(source_path)
             for f in files.get_children():
                 if type(f) is Directory:
                     self.download_dir(source_path + "/" + f.name,
-                                      current_path + "/" + f.name)
+                                      _current_path + "/" + f.name)
                 elif type(f) is File:
                     self.download(source_path + "/" + f.name,
-                                  current_path + "/" + f.name)
+                                  _current_path + "/" + f.name)
         except YandexDiskRestClient as e:
             raise e;
 
@@ -165,15 +163,49 @@ if __name__ == "__main__":
                             float(sys.argv[3]))
                         print(
                             " -- set a new daemon sleep time : " +
-                            Configuration().get_daemon_sleep_time())
+                            Configuration().get_daemon_sleep_time() + " sec")
                 elif len(sys.argv) >= 3 and sys.argv[2] in ["--get_sleep",
                                                             "--get_daemon_sleep",
                                                             "--get_sleep_time",
                                                             "--get_daemon_sleep_time"]:
                     print(
-                        " -- daemon sleep time : " + Configuration().get_daemon_sleep_time())
+                        " -- daemon sleep time : " + Configuration().get_daemon_sleep_time() + " sec")
+
+                elif sys.argv[2] in ["info"]:
+                    total, used, trash = cli.get_disk_info()
+                    print(" -- total space : " + str(total) + " MB")
+                    print(" -- used space  : " + str(used) + " MB")
+                    print(" -- free space  : " + str(total - used))
+                    print(" -- trash size  : " + str(trash) + " MB")
+
+            elif sys.argv[1] in ["download", "dwnld", "get"] and len(
+                    sys.argv) == 3:
+                cli.download(sys.argv[2], None, True)
+            elif sys.argv[1] in ["upload", "upld", "put"] and len(
+                    sys.argv) == 4:
+                cli.upload(sys.argv[2], sys.argv[3])
+            elif sys.argv[1] in ["remove", "rm", "rmv"] and len(sys.argv) == 3:
+                pass
+            elif sys.argv[1] in ["mkdir"] and len(sys.argv) == 3:
+                pass
+            elif sys.argv[1] in ["cp", "cpy", "copy"] and len(sys.argv) == 4:
+                pass
+            elif sys.argv[1] in ["ls"] and len(sys.argv) == 3:
+                files = cli.disk.get_content_of_folder(
+                    sys.argv[2]).get_children()
+                for f in files:
+                    print(" -- " + f.name + (
+                    "/" if type(f) is Directory else ""))
+            elif sys.argv[1] in ["ls"] and len(sys.argv) == 2:
+                files = cli.disk.get_content_of_folder(
+                    "/").get_children()
+                for f in files:
+                    print(" -- " + f.name + (
+                        "/" if type(f) is Directory else ""))
+            elif sys.argv[1] in ["move", "move"] and len(sys.argv) == 4:
+                pass
         except YandexDiskException as e:
-            sys.stderr.write(str(e))
+            sys.stderr.write(" == " + str(e) + "\n")
 
 
     main()
