@@ -1,7 +1,8 @@
-from yandex_disk_api import *
-from Configuration import Configuration
+#!/usr/bin/python3.4
+from src.yandex_disk_api import *
+from src.Configuration import Configuration
 
-import requests
+import requests, sys
 from pathlib import Path
 
 CONFIG_FNAME = "conf.conf"
@@ -88,14 +89,14 @@ class Client:
         source_fname = source_path.split("/")[-1]
         try:
             self.disk.copy_folder_or_file(source_path, dest_path)
-            print(source_fname + " successfully copied to " + dest_path)
+            print(" -- " + source_fname + " successfully copied to " + dest_path)
         except YandexDiskRestClient as e:
             raise e
 
     def move(self, source_path, dest_path):
         try:
             self.disk.move_folder_or_file(source_path, dest_path)
-            print(source_path + " successfully moved to " + dest_path)
+            print(" -- " + source_path + " successfully moved to " + dest_path)
         except YandexDiskException as e:
             raise e
 
@@ -133,9 +134,15 @@ if __name__ == "__main__":
 
 
     def usage():
-        print("usage: cli command <args...>")
-
-
+        print("\n\tusage: " + sys.argv[0] + " command <args...>")
+        print("\n\thelp\t\tshow this message")
+        print("\n\tdownload <path>\t\tdownload file")
+        print("\n\tupload <path>\t\tupload file")
+        print("\n\tinfo\t\tshow disk meta info")
+        print("\n\tmkdir <path>\t\tmake directory on disk")
+        print("\n\tcopy <source_path> <dest_path>\t\tcopy file")
+        print("\n\tremove <path>\t\tremove file")
+        print("")
     def main():
         try:
             cli = Client()
@@ -185,11 +192,13 @@ if __name__ == "__main__":
                     sys.argv) == 4:
                 cli.upload(sys.argv[2], sys.argv[3])
             elif sys.argv[1] in ["remove", "rm", "rmv"] and len(sys.argv) == 3:
-                pass
+                cli.disk.remove_folder_or_file(sys.argv[2])
+                print(" -- " + sys.argv[2] + " successfully removed")
             elif sys.argv[1] in ["mkdir"] and len(sys.argv) == 3:
-                pass
+                cli.mkdir(sys.argv[2])
+                print(" -- " + sys.argv[2] + " successfully created")
             elif sys.argv[1] in ["cp", "cpy", "copy"] and len(sys.argv) == 4:
-                pass
+                cli.cp(sys.argv[2], sys.argv[3])
             elif sys.argv[1] in ["ls"] and len(sys.argv) == 3:
                 files = cli.disk.get_content_of_folder(
                     sys.argv[2]).get_children()
@@ -202,10 +211,16 @@ if __name__ == "__main__":
                 for f in files:
                     print(" -- " + f.name + (
                         "/" if type(f) is Directory else ""))
-            elif sys.argv[1] in ["move", "move"] and len(sys.argv) == 4:
-                pass
+            elif sys.argv[1] in ["move", "mov"] and len(sys.argv) == 4:
+                cli.move(sys.argv[2], sys.argv[3])
+            elif sys.argv[1] in ["help"] and len (sys.argv) == 2:
+                usage()
         except YandexDiskException as e:
             sys.stderr.write(" == " + str(e) + "\n")
 
 
-    main()
+    # main()
+    files = Client().disk.get_content_of_folder("/").get_children()
+    for f in files:
+        print(" -- " + f.name + (
+            "/" if type(f) is Directory else ""))
