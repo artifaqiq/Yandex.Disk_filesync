@@ -1,154 +1,20 @@
 {
-  "children": [
+  "limit": 2000,
+  "items": [
     {
-      "size": 9464,
-      "modified": 1463738180.1656337,
-      "created": 1463738180.1656337,
-      "path": "/media/sf_VirtualBoxFailes/course/src/client.py",
-      "name": "client.py",
-      "type": "file"
-    },
-    {
-      "size": 141,
-      "modified": 1463736955.9402416,
-      "created": 1463736955.9402416,
-      "path": "/media/sf_VirtualBoxFailes/course/src/conf.conf",
-      "name": "conf.conf",
-      "type": "file"
-    },
-    {
-      "size": 4995,
-      "modified": 1463736955.9689703,
-      "created": 1463736955.9689703,
-      "path": "/media/sf_VirtualBoxFailes/course/src/Configuration.py",
-      "name": "Configuration.py",
-      "type": "file"
-    },
-    {
-      "size": 2951,
-      "modified": 1463413766.1537538,
-      "created": 1463413766.1537538,
-      "path": "/media/sf_VirtualBoxFailes/course/src/Configuration.pyc",
-      "name": "Configuration.pyc",
-      "type": "file"
-    },
-    {
-      "size": 2443,
-      "modified": 1463738145.6929238,
-      "created": 1463738145.6929238,
-      "path": "/media/sf_VirtualBoxFailes/course/src/daemon.py",
-      "name": "daemon.py",
-      "type": "file"
-    },
-    {
-      "size": 6667,
-      "modified": 1463312942.9329877,
-      "created": 1463312942.9329877,
-      "path": "/media/sf_VirtualBoxFailes/course/src/examples.py",
-      "name": "examples.py",
-      "type": "file"
-    },
-    {
-      "size": 4540,
-      "modified": 1463738151.569898,
-      "created": 1463738151.569898,
-      "path": "/media/sf_VirtualBoxFailes/course/src/fs.json",
+      "size": 2708,
+      "type": "file",
+      "media_type": "data",
       "name": "fs.json",
-      "type": "file"
-    },
-    {
-      "size": 22,
-      "modified": 1463252164.6310005,
-      "created": 1463252164.6310005,
-      "path": "/media/sf_VirtualBoxFailes/course/src/sync.files",
-      "name": "sync.files",
-      "type": "file"
-    },
-    {
-      "size": 1330,
-      "modified": 1463312942.7830682,
-      "created": 1463312942.7830682,
-      "path": "/media/sf_VirtualBoxFailes/course/src/SyncFiles.py",
-      "name": "SyncFiles.py",
-      "type": "file"
-    },
-    {
-      "size": 7143,
-      "modified": 1463313924.8139079,
-      "created": 1463313924.8139079,
-      "path": "/media/sf_VirtualBoxFailes/course/src/yandex_disk_api.py",
-      "name": "yandex_disk_api.py",
-      "type": "file"
-    },
-    {
-      "size": 9202,
-      "modified": 1463413121.2879133,
-      "created": 1463413121.2879133,
-      "path": "/media/sf_VirtualBoxFailes/course/src/yandex_disk_api.pyc",
-      "name": "yandex_disk_api.pyc",
-      "type": "file"
-    },
-    {
-      "size": 53,
-      "modified": 1463430805.2231207,
-      "created": 1463430805.2231207,
-      "path": "/media/sf_VirtualBoxFailes/course/src/_TEST1.txt",
-      "name": "_TEST1.txt",
-      "type": "file"
-    },
-    {
-      "size": 29,
-      "modified": 1463310491.4273713,
-      "created": 1463310491.4273713,
-      "path": "/media/sf_VirtualBoxFailes/course/src/_TEST2.txt",
-      "name": "_TEST2.txt",
-      "type": "file"
-    },
-    {
-      "children": [
-        {
-          "size": 8148,
-          "modified": 1463738180.4560318,
-          "created": 1463738180.4560318,
-          "path": "/media/sf_VirtualBoxFailes/course/src/__pycache__/client.cpython-34.pyc",
-          "name": "client.cpython-34.pyc",
-          "type": "file"
-        },
-        {
-          "size": 5522,
-          "modified": 1463736969.7275696,
-          "created": 1463736969.7275696,
-          "path": "/media/sf_VirtualBoxFailes/course/src/__pycache__/Configuration.cpython-34.pyc",
-          "name": "Configuration.cpython-34.pyc",
-          "type": "file"
-        },
-        {
-          "size": 1806,
-          "modified": 1463671524.1584773,
-          "created": 1463671524.1584773,
-          "path": "/media/sf_VirtualBoxFailes/course/src/__pycache__/SyncFiles.cpython-34.pyc",
-          "name": "SyncFiles.cpython-34.pyc",
-          "type": "file"
-        },
-        {
-          "size": 8232,
-          "modified": 1463413312.171808,
-          "created": 1463413312.171808,
-          "path": "/media/sf_VirtualBoxFailes/course/src/__pycache__/yandex_disk_api.cpython-34.pyc",
-          "name": "yandex_disk_api.cpython-34.pyc",
-          "type": "file"
-        }
-      ],
-      "modified": 1463738180.458966,
-      "created": 1463738180.458966,
-      "path": "/media/sf_VirtualBoxFailes/course/src/__pycache__",
-      "name": "__pycache__",
-      "type": "dir"
+      "modified": "2016-05-20T17:08:53+00:00",
+      "mime_type": "application/octet-stream",
+      "created": "2016-05-20T17:08:53+00:00",
+      "md5": "67bb534ba0a43a5d6d0740cd48f4f08d",
+      "path": "disk:/fsync/fs.json"
     }
   ],
-  "modified": 1463738180.171499,
-  "created": 1463738180.171499,
-  "path": "/media/sf_VirtualBoxFailes/course/src",
-  "name": ".",
-  "type": "dir"
+  "sort": "",
+  "offset": 0,
+  "path": "disk:/fsync",
+  "total": 1
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import requests
+import requests, json
 
 class Disk(object):
     def __init__(self, trash_size, total_space, used_space, system_folders):
@@ -69,6 +69,15 @@ class YandexDiskRestClient(object):
 
         json_dict = r.json()
         return Directory(**json_dict)
+
+    def get_folder_meta_dict(self, path):
+        url = self._base_url + "/resources"
+
+        payload = {'path': path,
+                   'limit': 2000}
+        r = requests.get(url, headers=self.base_headers, params=payload, )
+        self._check_code(r)
+        return r.json()['_embedded']
 
     def create_folder(self, path_to_folder):
         url = self._base_url + "/resources"

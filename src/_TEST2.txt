@@ -1,6 +1,0 @@
-this
-is
-second
-TEST
-FILE
-@@@

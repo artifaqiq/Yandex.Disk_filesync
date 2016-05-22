@@ -2,7 +2,7 @@
 from src.yandex_disk_api import *
 from src.Configuration import Configuration
 
-import requests, sys
+import requests, sys, os.path
 from pathlib import Path
 
 CONFIG_FNAME = "conf.conf"
@@ -47,10 +47,10 @@ class Client:
                     if chunk:
                         dest.write(chunk)
                         downloaded += BUFF_SIZE
-                        if (mes == True):
+                        if mes == True:
                             print(" -- <<< {0}  MB downloaded ...".format(
                                 round(downloaded // 1024 / 1024, 1)), end="\r")
-            if (mes == True): print(
+            if mes == True: print(
                 " -- " + fname + " successfully downloaded")
         except YandexDiskException as e:
             return False
@@ -60,16 +60,34 @@ class Client:
     def upload(self, source_path, dest_path):
         fname = source_path.split("/")[-1]
         from pathlib import Path
-        if (Path(source_path).exists() == False):
+        if Path(source_path).exists() == False:
             print(" == " + source_path + " don't exists")
             return False
-        if (Path(source_path).is_file() == False):
+        if Path(source_path).is_file() == False:
             print(" == " + source_path + " is not a file")
             return False
         try:
             sys.stdout.write(" -- uploading " + source_path + " ...\r")
             self.disk.upload_file(source_path, dest_path)
             print(" -- " + fname + " successfully uploaded in " + dest_path)
+        except YandexDiskException as e:
+            raise e
+
+    def upload_dir_or_file(self, source_path, dest_path, mes=False, depth=0):
+        if mes == True: sys.stdout.write(" " * 3 * depth)
+        try:
+            if os.path.isfile(source_path):
+                if mes == True: print(source_path + " uploaded ...")
+                self.disk.upload_file(source_path, dest_path)
+            elif os.path.isdir(source_path):
+                if mes == True: print(source_path + "/ folder create ... ")
+                self.disk.create_folder(dest_path)
+                for x in os.listdir(source_path):
+                    self.upload_dir_or_file(os.path.join(source_path, x),
+                                            dest_path + "/" + x, mes, depth + 1)
+            else:
+                print(" == " + source_path + " doesn't exists")
+                raise YandexDiskException("")
         except YandexDiskException as e:
             raise e
 
@@ -89,7 +107,8 @@ class Client:
         source_fname = source_path.split("/")[-1]
         try:
             self.disk.copy_folder_or_file(source_path, dest_path)
-            print(" -- " + source_fname + " successfully copied to " + dest_path)
+            print(
+                " -- " + source_fname + " successfully copied to " + dest_path)
         except YandexDiskRestClient as e:
             raise e
 
@@ -100,20 +119,20 @@ class Client:
         except YandexDiskException as e:
             raise e
 
-    def download_dir(self, source_path, _current_path=""):
+    def download_dir(self, source_path, _current_path="", mes=False):
         path = Path(source_path.split("/")[-1])
         if _current_path == "": _current_path = str(path)
-        print("make directory " + _current_path)
+        print(" -- make directory " + _current_path)
         if path.exists():
             print(
-                "removing existing local directory " + _current_path + "/ ...")
+                " -- removing existing local directory " + _current_path + "/ ...")
             try:
                 print(" ::: " + path.absolute())
                 import shutil
                 shutil.rmtree(path.absolute())
             except Exception:
                 print(
-                    "local directory " + _current_path + "/ can not be removed")
+                    " == local directory " + _current_path + "/ can not be removed")
                 return False
         Path(_current_path).mkdir()
         try:
@@ -121,12 +140,44 @@ class Client:
             for f in files.get_children():
                 if type(f) is Directory:
                     self.download_dir(source_path + "/" + f.name,
-                                      _current_path + "/" + f.name)
+                                      _current_path + "/" + f.name, mes)
                 elif type(f) is File:
                     self.download(source_path + "/" + f.name,
-                                  _current_path + "/" + f.name)
+                                  _current_path + "/" + f.name, mes)
         except YandexDiskRestClient as e:
             raise e;
+
+    def download_dir_or_file(self, source_path, dest_path, mes=False):
+        try:
+            if self.disk.get_content_of_folder(source_path).type == "file":
+                self.download(source_path, dest_path, mes=mes)
+            else:
+                self.download_dir(source_path, "", mes)
+        except YandexDiskException as e:
+            raise e
+
+
+def show_fs(self):
+    import os.path, json
+    if os.path.exists("$fs.json") == False:
+        print(" == $fs.json doesn't exists")
+        return
+    else:
+        def print_fs(dict, depth=0):
+            sys.stdout.write(" " * depth * 3)
+            if dict['type'] == "file":
+                print(dict['name'])
+            else:
+                print(dict['name'] + "/")
+                for x in dict['children']:
+                    print_fs(x, depth + 1)
+
+        with open("$fs.json", "r") as flocal:
+            disk_json = flocal.read()
+        disk = json.loads(disk_json)
+        print(" -- ")
+        print_fs(disk, 1)
+        return
 
 
 if __name__ == "__main__":
@@ -143,10 +194,12 @@ if __name__ == "__main__":
         print("\n\tcopy <source_path> <dest_path>\t\tcopy file")
         print("\n\tremove <path>\t\tremove file")
         print("")
+
+
     def main():
         try:
             cli = Client()
-
+            cli.upload_dir_or_file("EMPTY.TXT", "EMPTY.TXT", True, 0)
             if len(sys.argv) == 1:
                 usage()
                 return 0
@@ -204,23 +257,15 @@ if __name__ == "__main__":
                     sys.argv[2]).get_children()
                 for f in files:
                     print(" -- " + f.name + (
-                    "/" if type(f) is Directory else ""))
-            elif sys.argv[1] in ["ls"] and len(sys.argv) == 2:
-                files = cli.disk.get_content_of_folder(
-                    "/").get_children()
-                for f in files:
-                    print(" -- " + f.name + (
                         "/" if type(f) is Directory else ""))
+            elif sys.argv[1] in ["ls"] and len(sys.argv) == 2:
+                cli.show_fs()
             elif sys.argv[1] in ["move", "mov"] and len(sys.argv) == 4:
                 cli.move(sys.argv[2], sys.argv[3])
-            elif sys.argv[1] in ["help"] and len (sys.argv) == 2:
+            elif sys.argv[1] in ["help"] and len(sys.argv) == 2:
                 usage()
         except YandexDiskException as e:
             sys.stderr.write(" == " + str(e) + "\n")
 
 
-    # main()
-    files = Client().disk.get_content_of_folder("/").get_children()
-    for f in files:
-        print(" -- " + f.name + (
-            "/" if type(f) is Directory else ""))
+    main()
