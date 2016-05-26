@@ -1,17 +1,16 @@
 #!/usr/bin/python3.4
-from src.yandex_disk_api import *
-from src.Configuration import Configuration
+from config import Configuration
+from yandex_disk_api import *
 
 import requests, sys, os.path
-from pathlib import Path
-
-CONFIG_FNAME = "conf.conf"
-
 
 class Client:
-    def __init__(self):
-        self.token = Configuration().get_oauth()
-        self.disk = YandexDiskRestClient(self.token)
+    def __init__(self, conf):
+        try:
+            token = conf.get_option("disk", "oauth")
+        except Exception as e:
+            raise YandexDiskException(0, "configuration file exception")
+        self.disk = YandexDiskRestClient(token)
 
     def get_disk_info(self, devider=1024 ** 2):
         try:
@@ -22,16 +21,27 @@ class Client:
         except YandexDiskException as e:
             raise e
 
-    def mkdir(self, path):
+    def mkdir(self, path, mes=False, rm_exist=False):
         try:
+            if rm_exist:
+                try:
+                    self.disk.get_content_of_folder(path)
+                except:
+                    pass
+                else:
+                    if mes: print(" -- remove " + path)
+                    self.disk.remove_folder_or_file(path)
+            if mes: print(" -- mkdir " + path )
             self.disk.create_folder(path)
         except YandexDiskException as e:
-            print(e)
-            return False
-        else:
-            return True
+            raise e
 
-    def download(self, source_path, dest_path=None, mes=False):
+    def download_file(self, source_path, dest_path, mes=False, rm_exist=False):
+        if os.path.exists(dest_path) and not rm_exist:
+            if mes: print(" == " + dest_path + " already exists")
+            return False
+        elif os.path.exists(dest_path) and rm_exist and mes:
+            print(" -- remove " + dest_path)
         try:
             href = self.disk.get_download_link_to_file(source_path)['href']
             fname = source_path.split("/")[
@@ -39,7 +49,7 @@ class Client:
 
             BUFF_SIZE = 1024 * 128
             source = requests.get(href, stream=True)
-            if mes == True: print(" -- downloading " + fname + " ...")
+            if mes: print(" -- downloading " + fname + " ...")
 
             with open(fname, "wb") as dest:
                 downloaded = 0;
@@ -50,28 +60,40 @@ class Client:
                         if mes == True:
                             print(" -- <<< {0}  MB downloaded ...".format(
                                 round(downloaded // 1024 / 1024, 1)), end="\r")
-            if mes == True: print(
+            if mes: print(
                 " -- " + fname + " successfully downloaded")
         except YandexDiskException as e:
-            return False
+            raise e
         else:
             return True
 
-    def upload(self, source_path, dest_path):
-        fname = source_path.split("/")[-1]
-        from pathlib import Path
-        if Path(source_path).exists() == False:
-            print(" == " + source_path + " don't exists")
+    def upload_file(self, source_path, dest_path, mes=False, rm_exist=False):
+        try:
+            self.disk.get_content_of_folder(dest_path)
+        except YandexDiskException as e:
+            pass
+        else:
+            if rm_exist:
+                if mes: print(" -- remove " + dest_path)
+                self.disk.remove_folder_or_file(dest_path)
+            else:
+                if mes: print(" == " + dest_path + " already exists")
+                return False
+
+        if not os.path.exists(source_path):
+            if mes: print(" == " + source_path + " doesn't exists")
             return False
-        if Path(source_path).is_file() == False:
-            print(" == " + source_path + " is not a file")
+        if not os.path.isfile(source_path):
+            if mes: print(" == " + source_path + " is not a file")
             return False
         try:
-            sys.stdout.write(" -- uploading " + source_path + " ...\r")
+            if mes: sys.stdout.write(" -- uploading " + source_path + " ...\r")
             self.disk.upload_file(source_path, dest_path)
-            print(" -- " + fname + " successfully uploaded in " + dest_path)
+            print(" -- " + source_path + " successfully uploaded in " + dest_path)
         except YandexDiskException as e:
             raise e
+        else:
+            return True
 
     def upload_dir_or_file(self, source_path, dest_path, mes=False, depth=0):
         if mes == True: sys.stdout.write(" " * 3 * depth)
@@ -142,15 +164,15 @@ class Client:
                     self.download_dir(source_path + "/" + f.name,
                                       _current_path + "/" + f.name, mes)
                 elif type(f) is File:
-                    self.download(source_path + "/" + f.name,
-                                  _current_path + "/" + f.name, mes)
+                    self.download_file(source_path + "/" + f.name,
+                                       _current_path + "/" + f.name, mes)
         except YandexDiskRestClient as e:
             raise e;
 
     def download_dir_or_file(self, source_path, dest_path, mes=False):
         try:
             if self.disk.get_content_of_folder(source_path).type == "file":
-                self.download(source_path, dest_path, mes=mes)
+                self.download_file(source_path, dest_path, mes=mes)
             else:
                 self.download_dir(source_path, "", mes)
         except YandexDiskException as e:
@@ -198,8 +220,17 @@ if __name__ == "__main__":
 
     def main():
         try:
-            cli = Client()
-            cli.upload_dir_or_file("EMPTY.TXT", "EMPTY.TXT", True, 0)
+            try:
+                conf = Configuration("conf.conf")
+            except Exception as e:
+                print(" == " + str(e))
+                sys.exit()
+            cli = Client(conf)
+            # cli.mkdir("/suka", True, True)
+            # cli.download_file("/hello.txt", "hello.txt", True, True)
+            cli.upload_file("hello.txt", "/hello.txt", True, True)
+            sys.exit()
+
             if len(sys.argv) == 1:
                 usage()
                 return 0
@@ -240,10 +271,10 @@ if __name__ == "__main__":
 
             elif sys.argv[1] in ["download", "dwnld", "get"] and len(
                     sys.argv) == 3:
-                cli.download(sys.argv[2], None, True)
+                cli.download_file(sys.argv[2], None, True)
             elif sys.argv[1] in ["upload", "upld", "put"] and len(
                     sys.argv) == 4:
-                cli.upload(sys.argv[2], sys.argv[3])
+                cli.upload_file(sys.argv[2], sys.argv[3])
             elif sys.argv[1] in ["remove", "rm", "rmv"] and len(sys.argv) == 3:
                 cli.disk.remove_folder_or_file(sys.argv[2])
                 print(" -- " + sys.argv[2] + " successfully removed")
