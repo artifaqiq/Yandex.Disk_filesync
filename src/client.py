@@ -2,7 +2,8 @@
 from config import Configuration
 from yandex_disk_api import *
 
-import requests, sys, os.path
+import requests, sys, os.path, shutil
+
 
 class Client:
     def __init__(self, conf):
@@ -31,7 +32,7 @@ class Client:
                 else:
                     if mes: print(" -- remove " + path)
                     self.disk.remove_folder_or_file(path)
-            if mes: print(" -- mkdir " + path )
+            if mes: print(" -- mkdir " + path)
             self.disk.create_folder(path)
         except YandexDiskException as e:
             raise e
@@ -67,6 +68,35 @@ class Client:
         else:
             return True
 
+    def download_dir_or_file(self, source_path, dest_path, mes=False,
+                             rm_exist=False):
+        if os.path.exists(dest_path):
+            if rm_exist:
+                if mes: print(" -- remove -rf" + dest_path)
+                if os.path.isfile(dest_path): os.remove(dest_path)
+                else: shutil.rmtree(dest_path)
+            else:
+                if mes: print(" == " + dest_path + " already exists")
+                return False
+        try:
+            meta = self.disk.get_content_of_folder(source_path)
+        except:
+            if mes: print(" == " + source_path + " doesn't exists")
+            return False
+        try:
+            if meta.type == "file":
+                self.download_file(source_path, dest_path, mes)
+            else:
+                if mes: print(" -- mkdir " + dest_path)
+                os.mkdir(dest_path)
+                for x in meta.get_children():
+                    self.download_dir_or_file(x.path,
+                                              os.path.join(dest_path, x.name),
+                                              mes)
+        except YandexDiskException as e:
+            raise e
+
+
     def upload_file(self, source_path, dest_path, mes=False, rm_exist=False):
         try:
             self.disk.get_content_of_folder(dest_path)
@@ -89,29 +119,41 @@ class Client:
         try:
             if mes: sys.stdout.write(" -- uploading " + source_path + " ...\r")
             self.disk.upload_file(source_path, dest_path)
-            print(" -- " + source_path + " successfully uploaded in " + dest_path)
+            print(
+                " -- " + source_path + " successfully uploaded to " + dest_path)
         except YandexDiskException as e:
             raise e
         else:
             return True
 
-    def upload_dir_or_file(self, source_path, dest_path, mes=False, depth=0):
-        if mes == True: sys.stdout.write(" " * 3 * depth)
+
+    def upload_dir_or_file(self, source_path, dest_path, mes=False,
+                           rm_exist=False):
+        if not os.path.exists(source_path):
+            if mes: print(" == " + source_path + " doesn't exists")
+            return False
         try:
+            if rm_exist:
+                try:
+                    self.disk.get_folder_meta_dict(dest_path)
+                except YandexDiskException:
+                    pass
+                else:
+                    if mes: print(" -- remove " + dest_path)
+                    self.disk.remove_folder_or_file(dest_path)
+
             if os.path.isfile(source_path):
-                if mes == True: print(source_path + " uploaded ...")
-                self.disk.upload_file(source_path, dest_path)
-            elif os.path.isdir(source_path):
-                if mes == True: print(source_path + "/ folder create ... ")
+                self.upload_file(source_path, dest_path, mes, False)
+            else:
+                if mes: print(" -- mkdir " + dest_path)
                 self.disk.create_folder(dest_path)
                 for x in os.listdir(source_path):
                     self.upload_dir_or_file(os.path.join(source_path, x),
-                                            dest_path + "/" + x, mes, depth + 1)
-            else:
-                print(" == " + source_path + " doesn't exists")
-                raise YandexDiskException("")
+                                            dest_path + "/" + x, mes, False)
+
         except YandexDiskException as e:
             raise e
+
 
     def upload_from_url(self, source_url, dest_path):
         fname = source_url.split("/")[-1]
@@ -125,6 +167,7 @@ class Client:
         except YandexDiskException as e:
             raise e
 
+
     def cp(self, source_path, dest_path):
         source_fname = source_path.split("/")[-1]
         try:
@@ -134,12 +177,14 @@ class Client:
         except YandexDiskRestClient as e:
             raise e
 
+
     def move(self, source_path, dest_path):
         try:
             self.disk.move_folder_or_file(source_path, dest_path)
             print(" -- " + source_path + " successfully moved to " + dest_path)
         except YandexDiskException as e:
             raise e
+
 
     def download_dir(self, source_path, _current_path="", mes=False):
         path = Path(source_path.split("/")[-1])
@@ -169,37 +214,28 @@ class Client:
         except YandexDiskRestClient as e:
             raise e;
 
-    def download_dir_or_file(self, source_path, dest_path, mes=False):
-        try:
-            if self.disk.get_content_of_folder(source_path).type == "file":
-                self.download_file(source_path, dest_path, mes=mes)
-            else:
-                self.download_dir(source_path, "", mes)
-        except YandexDiskException as e:
-            raise e
 
+    def show_fs(self):
+        import os.path, json
+        if os.path.exists("$fs.json") == False:
+            print(" == $fs.json doesn't exists")
+            return
+        else:
+            def print_fs(dict, depth=0):
+                sys.stdout.write(" " * depth * 3)
+                if dict['type'] == "file":
+                    print(dict['name'])
+                else:
+                    print(dict['name'] + "/")
+                    for x in dict['children']:
+                        print_fs(x, depth + 1)
 
-def show_fs(self):
-    import os.path, json
-    if os.path.exists("$fs.json") == False:
-        print(" == $fs.json doesn't exists")
-        return
-    else:
-        def print_fs(dict, depth=0):
-            sys.stdout.write(" " * depth * 3)
-            if dict['type'] == "file":
-                print(dict['name'])
-            else:
-                print(dict['name'] + "/")
-                for x in dict['children']:
-                    print_fs(x, depth + 1)
-
-        with open("$fs.json", "r") as flocal:
-            disk_json = flocal.read()
-        disk = json.loads(disk_json)
-        print(" -- ")
-        print_fs(disk, 1)
-        return
+            with open("$fs.json", "r") as flocal:
+                disk_json = flocal.read()
+            disk = json.loads(disk_json)
+            print(" -- ")
+            print_fs(disk, 1)
+            return
 
 
 if __name__ == "__main__":
@@ -226,9 +262,8 @@ if __name__ == "__main__":
                 print(" == " + str(e))
                 sys.exit()
             cli = Client(conf)
-            # cli.mkdir("/suka", True, True)
-            # cli.download_file("/hello.txt", "hello.txt", True, True)
-            cli.upload_file("hello.txt", "/hello.txt", True, True)
+            # cli.download_dir_or_file("/diiir1", "suka", True, True)
+            # cli.upload_dir_or_file("suka", "lol", True, True)
             sys.exit()
 
             if len(sys.argv) == 1:
