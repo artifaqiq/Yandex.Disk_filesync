@@ -165,11 +165,6 @@ class YandexDiskRestClient(object):
         return files
 
     def move_folder_or_file(self, path_from, path_to):
-        """
-        Move folder or file
-        :param path_from: path from
-        :param path_to: path to
-        """
         url = self._base_url + "/resources/move"
 
         payload = {'path': path_to, 'from': path_from}
@@ -177,11 +172,6 @@ class YandexDiskRestClient(object):
         self._check_code(r)
 
     def upload_file(self, path_from, path_to):
-        """
-        Upload file
-        :param path_from: path from
-        :param path_to: path to yandex disk
-        """
         url = self._base_url + "/resources/upload"
 
         payload = {'path': path_to}
@@ -199,11 +189,6 @@ class YandexDiskRestClient(object):
             self._check_code(r2)
 
     def upload_file_from_url(self, from_url, path_to):
-        """
-        Upload file by URL
-        :param from_url: URL path from
-        :param path_to: path to yandex disk
-        """
         url = self._base_url + "/resources/upload"
 
         payload = {'path': path_to, 'url': from_url}

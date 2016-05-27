@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7efcbd3f-89c7-43ae-83c2-268ffdcf098a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/1/2/file1.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/1/2/file2.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/1/file3.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/$fs.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/SyncFiles.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/_TEST1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/_TEST2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/conf (copy).conf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/examples.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/fs.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/sync.files" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/course.iml" afterPath="$PROJECT_DIR$/.idea/course.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client.py" afterPath="$PROJECT_DIR$/src/client.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/conf.conf" afterPath="$PROJECT_DIR$/src/conf.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.py" afterPath="$PROJECT_DIR$/src/config.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/daemon.py" afterPath="$PROJECT_DIR$/src/daemon.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/filesys.py" afterPath="$PROJECT_DIR$/src/filesys.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/yandex_disk_api.py" afterPath="$PROJECT_DIR$/src/yandex_disk_api.py" />
     </list>
     <ignored path="course.iws" />
@@ -43,14 +36,58 @@
     <favorites_list name="course" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="daemon.py" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="filesys.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/filesys.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+                <element signature="e#1971#2699#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="547">
+              <caret line="66" column="53" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yandex_disk_api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/yandex_disk_api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="90" column="29" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="conf.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/conf.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="daemon.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/daemon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="146" column="12" selection-start-line="146" selection-start-column="12" selection-end-line="146" selection-end-column="12" />
+            <state relative-caret-position="-23">
+              <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
               <folding>
                 <element signature="e#21#46#0" expanded="true" />
+                <element signature="e#1405#2640#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -80,16 +117,20 @@
         <option value="$PROJECT_DIR$/src/File.py" />
         <option value="$PROJECT_DIR$/src/Directory.py" />
         <option value="$PROJECT_DIR$/src/SyncFiles.py" />
-        <option value="$PROJECT_DIR$/src/Configuration.py" />
         <option value="$PROJECT_DIR$/src/1/2/file2.txt" />
         <option value="$PROJECT_DIR$/src/1/2/file1.txt" />
-        <option value="$PROJECT_DIR$/src/conf.conf" />
         <option value="$PROJECT_DIR$/src/1/file3.txt" />
         <option value="$PROJECT_DIR$/src/EMPTY.TXT" />
-        <option value="$PROJECT_DIR$/src/client.py" />
         <option value="$PROJECT_DIR$/src/$fs.json" />
+        <option value="$PROJECT_DIR$/src/fs.json" />
+        <option value="$PROJECT_DIR$/src/settings.conf" />
+        <option value="$PROJECT_DIR$/src/Configuration.py" />
         <option value="$PROJECT_DIR$/src/yandex_disk_api.py" />
+        <option value="$PROJECT_DIR$/src/config.py" />
         <option value="$PROJECT_DIR$/src/daemon.py" />
+        <option value="$PROJECT_DIR$/src/conf.conf" />
+        <option value="$PROJECT_DIR$/src/client.py" />
+        <option value="$PROJECT_DIR$/src/filesys.py" />
       </list>
     </option>
   </component>
@@ -101,9 +142,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-2" />
-    <option name="y" value="-34" />
     <option name="width" value="1924" />
-    <option name="height" value="1116" />
+    <option name="height" value="1044" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -146,17 +186,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -174,10 +203,6 @@
               <option name="myItemId" value="course" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -187,6 +212,21 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="course" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -204,7 +244,25 @@
     <property name="SearchEverywhereHistoryKey" value="keymap&#9;ACTION&#9;Help.KeymapReference" />
     <property name="full.screen.before.presentation.mode" value="false" />
   </component>
-  <component name="RunManager" selected="Python.daemon">
+  <component name="RunManager" selected="Python.cient">
+    <configuration default="false" name="filesys" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="course" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/filesys.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -400,11 +458,17 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.examples" />
       <item index="1" class="java.lang.String" itemvalue="Python.daemon" />
       <item index="2" class="java.lang.String" itemvalue="Python.cient" />
+      <item index="3" class="java.lang.String" itemvalue="Python.filesys" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.filesys" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -433,16 +497,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-34" width="1924" height="1116" extended-state="0" />
+    <frame x="-2" y="0" width="1924" height="1044" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24166666" sideWeight="0.4641944" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24683544" sideWeight="0.4641944" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936507" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13240741" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1345496" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3139932" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3074074" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.221843" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25989583" sideWeight="0.53580564" order="2" side_tool="true" content_ui="tabs" />
@@ -452,6 +515,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1308305" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -462,13 +526,13 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1345496" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3139932" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3074074" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25597268" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5267666" sideWeight="0.4641944" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2378692" sideWeight="0.4641944" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13240741" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1308305" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -496,22 +560,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/File.py" />
-    <entry file="file://$PROJECT_DIR$/src/YandexDiskException.py" />
-    <entry file="file://$PROJECT_DIR$/src/yandex_disk_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Directory.py" />
-    <entry file="file://$PROJECT_DIR$/src/Disk.py" />
     <entry file="file://$PROJECT_DIR$/src/examples.py" />
     <entry file="file://$PROJECT_DIR$/src/File.py" />
     <entry file="file://$PROJECT_DIR$/src/YandexDiskException.py" />
@@ -1834,423 +1887,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Configuration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="135" column="25" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
-          <folding>
-            <marker date="1463736955968" expanded="false" signature="0:34" placeholder="import ..." />
-            <marker date="1463736955968" expanded="true" signature="85:4993" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="110:485" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="192:485" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="274:343" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="378:485" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="518:911" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="531:748" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="788:911" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="937:1344" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="950:1088" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1128:1305" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1175:1281" placeholder="&quot;...&quot;" />
-            <marker date="1463736955968" expanded="true" signature="1387:1767" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1400:1627" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1667:1767" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1805:2264" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="1818:1968" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2008:2220" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2299:2678" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2312:2538" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2578:2678" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2707:3164" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2720:2868" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="2908:3120" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3204:3615" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3217:3452" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3492:3615" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3649:4111" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3662:3825" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3865:4066" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="3912:4042" placeholder="&quot;...&quot;" />
-            <marker date="1463736955968" expanded="true" signature="4145:4539" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4158:4376" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4416:4539" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4567:4993" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4580:4722" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4762:4952" placeholder="..." />
-            <marker date="1463736955968" expanded="true" signature="4809:4928" placeholder="&quot;...&quot;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3.4/os.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1397225618000" expanded="true" signature="0:1134" placeholder="&quot;&quot;&quot;OS routines for Mac, NT, or Posix depending on what system we're on....&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="false" signature="1140:1175" placeholder="import ..." />
-            <marker date="1397225618000" expanded="true" signature="1271:1505" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="1526:1555" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="1587:1714" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="1716:1827" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="1849:2139" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="1920:1984" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="2161:2506" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="2228:2289" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="2528:2917" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="2595:2656" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="3142:6333" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="3190:3283" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="4607:5784" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="6336:6525" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="6566:6655" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="6704:7762" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="6709:7110" placeholder="&quot;&quot;&quot;makedirs(name [, mode=0o777][, exist_ok=False])...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="7247:7608" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="7335:7411" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="7668:7762" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="7785:8471" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="7790:8224" placeholder="&quot;&quot;&quot;removedirs(name)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="8354:8471" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="8495:9345" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="8500:9082" placeholder="&quot;&quot;&quot;renames(old, new)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="9262:9345" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="9463:13162" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="9468:12110" placeholder="&quot;&quot;&quot;Directory tree generator....&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="12178:12497" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="12506:12623" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="12515:12594" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="12650:12722" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="12773:12885" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="12957:13109" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="13258:17075" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="13350:15153" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="13359:14649" placeholder="&quot;&quot;&quot;Directory tree generator....&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="14658:14757" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="14887:15111" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15221:17046" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15230:15392" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15482:16300" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15499:15930" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15516:15764" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15968:16300" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="15989:16229" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="16396:16973" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="16413:16556" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="16591:16687" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="16704:16923" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="16779:16923" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="17193:17338" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="17198:17316" placeholder="&quot;&quot;&quot;execl(file, *args)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="17364:17565" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="17369:17513" placeholder="&quot;&quot;&quot;execle(file, *args, env)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="17591:17774" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="17596:17751" placeholder="&quot;&quot;&quot;execlp(file, *args)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="17801:18044" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="17806:17991" placeholder="&quot;&quot;&quot;execlpe(file, *args, env)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="18069:18297" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="18074:18272" placeholder="&quot;&quot;&quot;execvp(file, args)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="18328:18592" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="18333:18562" placeholder="&quot;&quot;&quot;execvpe(file, args, env)...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="18703:19632" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="18727:18784" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="18794:18868" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="18916:18965" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19073:19148" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19174:19527" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19298:19527" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19467:19527" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19663:21105" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="19668:19917" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="19922:20121" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="20190:20330" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="20366:21014" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="20565:21014" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="20705:20894" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="20747:20855" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="21257:22837" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="21353:21589" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="21622:21850" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="21712:21811" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="21890:22028" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22061:22312" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22213:22312" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22337:22406" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22430:22461" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22486:22668" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22551:22665" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22689:22715" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22754:22837" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="22926:22991" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23091:23160" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23183:24204" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23204:23646" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23282:23429" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23505:23544" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23656:24099" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23778:23961" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="23988:24049" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="24302:24519" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="24307:24482" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="24641:25294" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="24670:24809" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="25013:25249" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="25022:25207" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="25311:26587" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="25481:26004" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="25490:25744" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="26033:26556" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="26042:26296" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="26744:29706" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="26852:27000" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27049:27888" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27153:27370" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27190:27323" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27384:27888" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27523:27888" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27923:28271" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="27932:28215" placeholder="&quot;&quot;&quot;spawnv(mode, file, args) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="28312:28697" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="28321:28641" placeholder="&quot;&quot;&quot;spawnve(mode, file, args, env) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="28793:29177" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="28802:29120" placeholder="&quot;&quot;&quot;spawnvp(mode, file, args) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="29219:29639" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="29228:29582" placeholder="&quot;&quot;&quot;spawnvpe(mode, file, args, env) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="29730:30683" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="29735:29830" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="29866:30199" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="29875:30159" placeholder="&quot;&quot;&quot;spawnl(mode, file, *args) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="30236:30639" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="30245:30565" placeholder="&quot;&quot;&quot;spawnle(mode, file, *args, env) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="30708:31767" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="30713:30809" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="30845:31244" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="30854:31203" placeholder="&quot;&quot;&quot;spawnlp(mode, file, *args) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="31282:31721" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="31291:31646" placeholder="&quot;&quot;&quot;spawnlpe(mode, file, *args, env) -&gt; integer...&quot;&quot;&quot;" />
-            <marker date="1397225618000" expanded="true" signature="31829:32696" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="32184:32436" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="32446:32696" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="32793:33399" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="32831:32887" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="32908:33168" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="33193:33213" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="33244:33265" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="33298:33341" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="33365:33399" placeholder="..." />
-            <marker date="1397225618000" expanded="true" signature="33454:33617" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SyncFiles.py" />
-    <entry file="file://$PROJECT_DIR$/src/1/2/file2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/1/2/file1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/conf.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/1/file3.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="20" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/1/2/file2.txt" />
+    <entry file="file://$PROJECT_DIR$/src/1/2/file1.txt" />
+    <entry file="file://$PROJECT_DIR$/src/1/file3.txt" />
     <entry file="file://$PROJECT_DIR$/src/EMPTY.TXT" />
-    <entry file="file://$PROJECT_DIR$/src/client.py">
+    <entry file="file://$PROJECT_DIR$/src/$fs.json" />
+    <entry file="file://$PROJECT_DIR$/src/fs.json" />
+    <entry file="file://$PROJECT_DIR$/src/file1.txt" />
+    <entry file="file://$PROJECT_DIR$/src/Горы.jpg" />
+    <entry file="file://$PROJECT_DIR$/src/settings.conf" />
+    <entry file="file://$PROJECT_DIR$/src/hello.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/daemon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-23">
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
           <folding>
-            <marker date="1463770506544" expanded="true" signature="21:154" placeholder="import ..." />
-            <marker date="1463770506544" expanded="true" signature="198:6183" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="222:324" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="373:641" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="386:580" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="456:579" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="669:849" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="765:811" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="914:1927" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="927:1823" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1308:1727" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1412:1727" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1442:1727" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1572:1727" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1755:1823" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="1974:2595" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2098:2181" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2230:2314" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2327:2534" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2674:3486" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2745:3425" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2789:2920" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="2965:3297" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="3142:3297" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="3315:3425" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="3541:3988" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="3596:3927" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="3729:3860" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4031:4321" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4094:4259" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4366:4586" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4379:4525" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4657:5824" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4842:5255" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="4962:5088" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5118:5255" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5304:5761" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5412:5761" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5453:5592" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5630:5761" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5896:6183" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="5909:6122" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6204:6832" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6273:6333" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6343:6832" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6380:6647" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6519:6647" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6861:11108" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="6895:7354" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="7372:11095" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="7385:11001" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="7517:7566" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="7606:9560" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="7705:7877" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="8068:8202" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="8248:8723" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="8303:8410" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="8436:8723" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="8784:9046" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="9048:9178" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="9225:9560" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="9957:10087" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="10153:10262" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="10452:10696" placeholder="..." />
-            <marker date="1463770506544" expanded="true" signature="10588:10696" placeholder="..." />
+            <element signature="e#21#46#0" expanded="true" />
+            <element signature="e#1405#2640#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/yandex_disk_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="79" column="36" selection-start-line="79" selection-start-column="36" selection-end-line="79" selection-end-column="36" />
-          <folding>
-            <marker date="1463860325900" expanded="true" signature="64:299" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="141:299" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="320:425" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="354:425" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="451:1029" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="485:971" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="540:627" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="662:971" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="716:971" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="758:844" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="890:971" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1000:1029" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1067:6934" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1158:1363" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1216:1362" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1397:1708" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1762:2056" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="1827:1884" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="2099:2351" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="2164:2210" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="2397:2645" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="2689:2871" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="2927:3134" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="3190:3411" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="3450:3777" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="3576:3752" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="3833:4226" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4116:4207" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4273:4463" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4501:4808" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4729:4786" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4864:5191" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="4873:4984" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1463860325900" expanded="true" signature="5239:5845" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="5248:5363" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1463860325900" expanded="true" signature="5665:5845" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="5901:6242" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="5910:6035" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1463860325900" expanded="true" signature="6293:6455" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="6488:6934" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="6541:6934" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="6704:6934" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="6973:7213" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="7026:7107" placeholder="..." />
-            <marker date="1463860325900" expanded="true" signature="7131:7213" placeholder="..." />
-          </folding>
+        <state relative-caret-position="522">
+          <caret line="90" column="29" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fs.json">
+    <entry file="file://$PROJECT_DIR$/src/conf.conf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-          <folding>
-            <marker date="1463861231332" expanded="true" signature="0:3188" placeholder="{&quot;name&quot;: &quot;.&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="43:3169" placeholder="[...]" />
-            <marker date="1463861231332" expanded="true" signature="49:197" placeholder="{&quot;name&quot;: &quot;$fs.json&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="203:1034" placeholder="{&quot;name&quot;: &quot;1&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="258:1007" placeholder="[...]" />
-            <marker date="1463861231332" expanded="true" signature="268:814" placeholder="{&quot;name&quot;: &quot;2&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="337:779" placeholder="[...]" />
-            <marker date="1463861231332" expanded="true" signature="351:552" placeholder="{&quot;name&quot;: &quot;file1.txt&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="566:767" placeholder="{&quot;name&quot;: &quot;file2.txt&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="824:999" placeholder="{&quot;name&quot;: &quot;file3.txt&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1040:1192" placeholder="{&quot;name&quot;: &quot;client.py&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1198:1348" placeholder="{&quot;name&quot;: &quot;conf.conf&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1354:1519" placeholder="{&quot;name&quot;: &quot;Configuration.py&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1525:1692" placeholder="{&quot;name&quot;: &quot;Configuration.pyc&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1698:1849" placeholder="{&quot;name&quot;: &quot;daemon.py&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="1855:2002" placeholder="{&quot;name&quot;: &quot;fs.json&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2008:2177" placeholder="{&quot;name&quot;: &quot;yandex_disk_api.py&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2183:2354" placeholder="{&quot;name&quot;: &quot;yandex_disk_api.pyc&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2360:3165" placeholder="{&quot;name&quot;: &quot;__pycache__&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2435:3138" placeholder="[...]" />
-            <marker date="1463861231332" expanded="true" signature="2445:2656" placeholder="{&quot;name&quot;: &quot;client.cpython-34.pyc&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2666:2891" placeholder="{&quot;name&quot;: &quot;Configuration.cpython-34.pyc&quot;...}" />
-            <marker date="1463861231332" expanded="true" signature="2901:3130" placeholder="{&quot;name&quot;: &quot;yandex_disk_api.cpython-34.pyc&quot;...}" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/$fs.json">
+    <entry file="file://$PROJECT_DIR$/src/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-          <folding>
-            <marker date="1463861231638" expanded="true" signature="0:437" placeholder="{&quot;path&quot;: &quot;disk:/fsync&quot;...}" />
-            <marker date="1463861231638" expanded="true" signature="38:375" placeholder="[...]" />
-            <marker date="1463861231638" expanded="true" signature="44:371" placeholder="{&quot;name&quot;: &quot;fs.json&quot;...}" />
-          </folding>
+        <state relative-caret-position="547">
+          <caret line="66" column="53" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/daemon.py">
+    <entry file="file://$PROJECT_DIR$/src/filesys.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="146" column="12" selection-start-line="146" selection-start-column="12" selection-end-line="146" selection-end-column="12" />
+        <state relative-caret-position="247">
+          <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
           <folding>
-            <element signature="e#21#46#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#1971#2699#0" expanded="false" />
           </folding>
         </state>
       </provider>

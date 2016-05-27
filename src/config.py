@@ -36,7 +36,7 @@ class Configuration():
             with open(self.PATH, "w") as f:
                 config.write(f)
         except configparser.Error as e:
-            return False
+            raise e
         else:
             return True
 
@@ -44,8 +44,8 @@ class Configuration():
         try:
             config = configparser.RawConfigParser()
             config.read(self.PATH)
-            value = config.get("disk", "OAuth")
+            value = config.get(section, option)
         except configparser.Error as e:
-            return False
+            raise e
         else:
             return value

@@ -2,7 +2,7 @@
 from config import Configuration
 from yandex_disk_api import *
 
-import requests, sys, os.path, shutil
+import requests, sys, os.path, shutil, configparser
 
 
 class Client:
@@ -44,6 +44,10 @@ class Client:
         elif os.path.exists(dest_path) and rm_exist and mes:
             print(" -- remove " + dest_path)
         try:
+            if self.disk.get_content_of_folder(dest_path).type == "dir":
+                if mes: print(" == " + dest_path + " is a directory")
+                return False
+
             href = self.disk.get_download_link_to_file(source_path)['href']
             fname = source_path.split("/")[
                 -1] if dest_path == None else dest_path
@@ -72,9 +76,11 @@ class Client:
                              rm_exist=False):
         if os.path.exists(dest_path):
             if rm_exist:
-                if mes: print(" -- remove -rf" + dest_path)
-                if os.path.isfile(dest_path): os.remove(dest_path)
-                else: shutil.rmtree(dest_path)
+                if mes: print(" -- remove -rf " + dest_path)
+                if os.path.isfile(dest_path):
+                    os.remove(dest_path)
+                else:
+                    shutil.rmtree(dest_path)
             else:
                 if mes: print(" == " + dest_path + " already exists")
                 return False
@@ -95,7 +101,6 @@ class Client:
                                               mes)
         except YandexDiskException as e:
             raise e
-
 
     def upload_file(self, source_path, dest_path, mes=False, rm_exist=False):
         try:
@@ -119,13 +124,12 @@ class Client:
         try:
             if mes: sys.stdout.write(" -- uploading " + source_path + " ...\r")
             self.disk.upload_file(source_path, dest_path)
-            print(
+            if mes: print(
                 " -- " + source_path + " successfully uploaded to " + dest_path)
         except YandexDiskException as e:
             raise e
         else:
             return True
-
 
     def upload_dir_or_file(self, source_path, dest_path, mes=False,
                            rm_exist=False):
@@ -135,7 +139,7 @@ class Client:
         try:
             if rm_exist:
                 try:
-                    self.disk.get_folder_meta_dict(dest_path)
+                    self.disk.get_content_of_folder(dest_path)
                 except YandexDiskException:
                     pass
                 else:
@@ -154,66 +158,29 @@ class Client:
         except YandexDiskException as e:
             raise e
 
-
-    def upload_from_url(self, source_url, dest_path):
+    def upload_from_url(self, source_url, dest_path, mes=False):
         fname = source_url.split("/")[-1]
         try:
-            if dest_path[-1] == "/":
-                self.disk.upload_file_from_url(source_url, dest_path + fname)
-            else:
-                self.disk.upload_file_from_url(source_url,
-                                               dest_path + "/" + fname)
-            print(fname + "successfully uploaded in " + dest_path)
+            self.disk.upload_file_from_url(source_url, dest_path)
+            if mes: print(fname + "successfully uploaded to " + dest_path)
         except YandexDiskException as e:
             raise e
 
-
-    def cp(self, source_path, dest_path):
-        source_fname = source_path.split("/")[-1]
+    def cp(self, source_path, dest_path, mes=False):
         try:
             self.disk.copy_folder_or_file(source_path, dest_path)
-            print(
-                " -- " + source_fname + " successfully copied to " + dest_path)
+            if mes: print(
+                " -- " + source_path + " successfully copied to " + dest_path)
         except YandexDiskRestClient as e:
             raise e
 
-
-    def move(self, source_path, dest_path):
+    def move(self, source_path, dest_path, mes=False):
         try:
             self.disk.move_folder_or_file(source_path, dest_path)
-            print(" -- " + source_path + " successfully moved to " + dest_path)
+            if mes: print(
+                " -- " + source_path + " successfully moved to " + dest_path)
         except YandexDiskException as e:
             raise e
-
-
-    def download_dir(self, source_path, _current_path="", mes=False):
-        path = Path(source_path.split("/")[-1])
-        if _current_path == "": _current_path = str(path)
-        print(" -- make directory " + _current_path)
-        if path.exists():
-            print(
-                " -- removing existing local directory " + _current_path + "/ ...")
-            try:
-                print(" ::: " + path.absolute())
-                import shutil
-                shutil.rmtree(path.absolute())
-            except Exception:
-                print(
-                    " == local directory " + _current_path + "/ can not be removed")
-                return False
-        Path(_current_path).mkdir()
-        try:
-            files = self.disk.get_content_of_folder(source_path)
-            for f in files.get_children():
-                if type(f) is Directory:
-                    self.download_dir(source_path + "/" + f.name,
-                                      _current_path + "/" + f.name, mes)
-                elif type(f) is File:
-                    self.download_file(source_path + "/" + f.name,
-                                       _current_path + "/" + f.name, mes)
-        except YandexDiskRestClient as e:
-            raise e;
-
 
     def show_fs(self):
         import os.path, json
@@ -241,7 +208,6 @@ class Client:
 if __name__ == "__main__":
     import sys
 
-
     def usage():
         print("\n\tusage: " + sys.argv[0] + " command <args...>")
         print("\n\thelp\t\tshow this message")
@@ -250,7 +216,7 @@ if __name__ == "__main__":
         print("\n\tinfo\t\tshow disk meta info")
         print("\n\tmkdir <path>\t\tmake directory on disk")
         print("\n\tcopy <source_path> <dest_path>\t\tcopy file")
-        print("\n\tremove <path>\t\tremove file")
+        print("\n\tremove <path>\t\tremove file or dir")
         print("")
 
 
@@ -262,40 +228,44 @@ if __name__ == "__main__":
                 print(" == " + str(e))
                 sys.exit()
             cli = Client(conf)
-            # cli.download_dir_or_file("/diiir1", "suka", True, True)
-            # cli.upload_dir_or_file("suka", "lol", True, True)
+            from filesys import FileSystemImage
+            filesys = FileSystemImage(conf.get_option("daemon", "home-dir"), conf.get_option("daemon", "app-dir"), cli)
+            filesys.sync_local_priority(True, False, True)
             sys.exit()
+
 
             if len(sys.argv) == 1:
                 usage()
                 return 0
-            if sys.argv[1] == "global":
-                if sys.argv[2] in ["--set_oauth"] and len(
-                        sys.argv) >= 4:
-                    Configuration().set_oauth(sys.argv[3])
+            elif sys.argv[1] == "global":
+                if sys.argv[2] in ["--set-oauth"] and len(
+                        sys.argv) == 4:
+                    conf.set_option("disk", "oauth", sys.argv[3])
                     print(
-                        " -- set a new OAuth token : " + Configuration().get_oauth())
-                elif len(sys.argv) >= 3 and sys.argv[2] in ["--get_oauth"]:
-                    print(" -- OAuth token: " + Configuration().get_oauth())
-                elif sys.argv[2] in ["--set_daemon_sleep_time",
-                                     "--set_sleep",
-                                     "--set_sleep_time"] and len(
-                    sys.argv) >= 4:
-                    if sys.argv[3].isdigit() == False:
+                        " -- new OAuth token : " + conf.get_option("disk",
+                                                                   "oauth"))
+                elif len(sys.argv) == 3 and sys.argv[2] in ["--get-oauth"]:
+                    print(
+                        " -- OAuth token: " + conf.get_option("disk", "oauth"))
+                elif sys.argv[2] in ["--set-daemon-sleep-time",
+                                     "--set-sleep",
+                                     "--set-sleep-time"] and len(
+                    sys.argv) == 4:
+                    if not sys.argv[3].isdigit():
                         print(
                             " == enter the number of seconds, example : 5")
                     else:
-                        Configuration().set_daemon_sleep_time(
-                            float(sys.argv[3]))
+                        conf.set_option("daemon", "sleep-time", sys.argv[3])
                         print(
-                            " -- set a new daemon sleep time : " +
-                            Configuration().get_daemon_sleep_time() + " sec")
-                elif len(sys.argv) >= 3 and sys.argv[2] in ["--get_sleep",
-                                                            "--get_daemon_sleep",
-                                                            "--get_sleep_time",
-                                                            "--get_daemon_sleep_time"]:
+                            " -- new daemon sleep time : " +
+                            conf.get_option("daemon", "sleep-time") + " sec.")
+                elif len(sys.argv) == 3 and sys.argv[2] in ["--get-sleep",
+                                                            "--get-daemon-sleep",
+                                                            "--get-sleep-time",
+                                                            "--get-daemon-sleep-time"]:
                     print(
-                        " -- daemon sleep time : " + Configuration().get_daemon_sleep_time() + " sec")
+                        " -- daemon sleep time : " + conf.get_option("daemon",
+                                                                     "sleep-time") + " sec")
 
                 elif sys.argv[2] in ["info"]:
                     total, used, trash = cli.get_disk_info()
@@ -305,11 +275,40 @@ if __name__ == "__main__":
                     print(" -- trash size  : " + str(trash) + " MB")
 
             elif sys.argv[1] in ["download", "dwnld", "get"] and len(
-                    sys.argv) == 3:
-                cli.download_file(sys.argv[2], None, True)
+                    sys.argv) >= 3:
+                optlen, r, m = 0, False, False
+                if "-" in sys.argv[2]:
+                    optlen = 1
+                    if "r" in sys.argv[2]:
+                        r = True
+                    if "m" in sys.argv[2]:
+                        m = True
+                dest = os.path.basename(sys.argv[2 + optlen]) if len(
+                    sys.argv) - optlen == 3 else sys.argv[3 + optlen]
+
+                if r:
+                    cli.download_dir_or_file(sys.argv[2 + optlen], dest, True,
+                                             m)
+                else:
+                    cli.download_file(sys.argv[2 + optlen], dest, True, m)
+
             elif sys.argv[1] in ["upload", "upld", "put"] and len(
-                    sys.argv) == 4:
-                cli.upload_file(sys.argv[2], sys.argv[3])
+                    sys.argv) >= 3:
+                optlen, r, m = 0, False, False
+                if "-" in sys.argv[2]:
+                    optlen = 1
+                    if "r" in sys.argv[2]:
+                        r = True
+                    if "m" in sys.argv[2]:
+                        m = True
+                dest = os.path.basename(sys.argv[2 + optlen]) if len(
+                    sys.argv) - optlen == 3 else sys.argv[3 + optlen]
+
+                if r:
+                    cli.upload_dir_or_file(sys.argv[2 + optlen], dest, True, m)
+                else:
+                    cli.upload_file(sys.argv[2 + optlen], dest, True, m)
+
             elif sys.argv[1] in ["remove", "rm", "rmv"] and len(sys.argv) == 3:
                 cli.disk.remove_folder_or_file(sys.argv[2])
                 print(" -- " + sys.argv[2] + " successfully removed")
@@ -332,6 +331,10 @@ if __name__ == "__main__":
                 usage()
         except YandexDiskException as e:
             sys.stderr.write(" == " + str(e) + "\n")
+        except configparser.Error as c:
+            sys.stderr.write(
+                " == config file exception\n == usage: " + sys.argv[
+                    0] + " global --init\n")
 
 
     main()

@@ -1,9 +1,8 @@
 #!/usr/bin/python3.4
 from select import select
-
-from src.Configuration import Configuration
-from src.yandex_disk_api import *
-from src.client import Client
+from config import Configuration
+from yandex_disk_api import *
+from client import Client
 
 import sys, json, time, os, hashlib, shutil
 
@@ -88,14 +87,12 @@ class Daemon:
 
             pass
 
-
     def run(self):
         self.download_or_create_fs_file()
         local, disk = self.get_local_and_disk_fs_dict(self.local_fs_fname,
                                                       self.disk_fs_fname)
         print(disk)
         # self.sync_local_priority(local, disk)
-
 
 def main():
     daemon = Daemon()
