@@ -1,6 +1,6 @@
 from yandex_disk_api import *
 
-import hashlib, os.path
+import hashlib, os.path, shutil
 import json
 
 
@@ -102,7 +102,8 @@ class FileSystemImage:
                         self._sync_local_priority(x, y, remove, save_orig, mes)
                         break
                     elif x['name'] == y['name'] and not x['type'] == y['type']:
-                        self.client.upload_dir_or_file(x['path'], y['type'], mes, rm_exist=True)
+                        self.client.upload_dir_or_file(x['path'], y['type'],
+                                                       mes, rm_exist=True)
                         break
                 else:
                     self.client.upload_dir_or_file(x['path'],
@@ -125,4 +126,60 @@ class FileSystemImage:
                             'type']:
                             break
                     else:
-                        self.client.move(x['path'], x['path'] + ".orig", mes)
+                        if x['path'][-5:] != ".orig":
+                            self.client.move(x['path'], x['path'] + ".orig", mes)
+
+    def sync_disk_priority(self, remove=True, save_orig=False, mes=False):
+        self._sync_disk_priority(self.local, self.disk, remove, save_orig,
+                                 mes)
+
+    def _sync_disk_priority(self, local, disk, remove, save_orig, mes):
+        if local['type'] == disk['type'] == "file" and local['name'] == disk[
+            'name']:
+            if local['md5'] != disk['md5']:
+                if save_orig:
+                    if mes: print(
+                        " -- move " + local['path'] + " to " +
+                        local['path'] + ".orig")
+                    shutil.move(local['path'], local['path'] + ".orig")
+
+                self.client.download_dir_or_file(local['path'],
+                                                 disk['path'], mes, True)
+
+        elif local['type'] == disk['type'] == "dir":
+            for x in disk['items']:
+                for y in local['items']:
+                    if x['name'] == y['name'] and x['type'] == y['type']:
+                        self._sync_disk_priority(y, x, remove, save_orig, mes)
+                        break
+                    elif x['name'] == y['name'] and not x['type'] == y['type']:
+                        self.client.download_dir_or_file(x['path'], y['path'],
+                                                         mes, rm_exist=True)
+                        break
+                else:
+                    self.client.download_dir_or_file(x['path'], os.path.join(
+                        local['path'], x['name']), mes, rm_exist=True)
+
+            if remove and not save_orig:
+                for x in local['items']:
+                    for y in disk['items']:
+                        if x['name'] == y['name']:
+                            break
+                    else:
+                        if mes: print(" -- remove " + x['path'])
+                        if os.path.isdir(x['path']):
+                            shutil.rmtree(x['path'])
+                        else:
+                            os.remove(x['path'])
+
+            elif remove and save_orig:
+                for x in local['items']:
+                    for y in disk['items']:
+                        if x['name'] == y['name']:
+                            break
+                    else:
+                        if x['path'][-5:] != ".orig":
+                            if mes: print(
+                                " -- move " + x['path'] + " to " + x[
+                                    'path'] + ".orig")
+                            shutil.move(x['path'], x['path'] + ".orig")

@@ -44,7 +44,7 @@ class Client:
         elif os.path.exists(dest_path) and rm_exist and mes:
             print(" -- remove " + dest_path)
         try:
-            if self.disk.get_content_of_folder(dest_path).type == "dir":
+            if self.disk.get_content_of_folder(source_path).type == "dir":
                 if mes: print(" == " + dest_path + " is a directory")
                 return False
 
@@ -100,6 +100,7 @@ class Client:
                                               os.path.join(dest_path, x.name),
                                               mes)
         except YandexDiskException as e:
+            print(source_path)
             raise e
 
     def upload_file(self, source_path, dest_path, mes=False, rm_exist=False):
@@ -230,9 +231,8 @@ if __name__ == "__main__":
             cli = Client(conf)
             from filesys import FileSystemImage
             filesys = FileSystemImage(conf.get_option("daemon", "home-dir"), conf.get_option("daemon", "app-dir"), cli)
-            filesys.sync_local_priority(True, False, True)
+            filesys.sync_disk_priority(True, True, True)
             sys.exit()
-
 
             if len(sys.argv) == 1:
                 usage()
