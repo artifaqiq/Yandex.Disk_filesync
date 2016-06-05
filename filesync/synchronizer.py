@@ -1,76 +1,90 @@
 #!/usr/bin/python3.4
-import sys, os, sys, logging, time
+import sys, os, sys, logging, time, atexit
 
 from client import Client
 from filesys import FileSystemImage
 from config import Configuration
+from daemon import runner
+import codecs
 
 APP_OPT_PATH = os.path.join(os.environ['HOME'], ".filesync")
 CONFIG_PATH = os.path.join(APP_OPT_PATH, "config.ini")
 LOG_PATH = os.path.join(APP_OPT_PATH, "synchronizer.log")
 PID_PATH = os.path.join(APP_OPT_PATH, "synchronizer.pid")
 
-from daemons.prefab import run
 
-class Synchronizer(run.RunDaemon):
-    def __init__(self, pidfile):
-        super(type(self))
-        self._pidfile = pidfile
-        self.count_iteration = 0
+class Synchronizer(object):
+    def __init__(self):
+        self.stdin_path = '/dev/null'
+        self.stdout_path = LOG_PATH
+        self.stderr_path = LOG_PATH
+        self.pidfile_path = PID_PATH
+        self.pidfile_timeout = 5
+
+        self.encoder = codecs.getencoder('utf-8')
+        self.first_run = True
 
     def run(self):
-        os.system("notify-send \"daemon run!\"")
-        time.sleep(10)
         while True:
             try:
-                mes = True if len(sys.argv) >= 2 and sys.argv[
-                                                         1] == "mes" else False
                 config = Configuration(CONFIG_PATH)
+                client = Client(config)
                 fs = FileSystemImage(config.get_option("daemon", "home-dir"),
                                      config.get_option("daemon", "app-dir"),
-                                     Client(config))
-                fs.exception_files.append(CONFIG_PATH)
+                                     client)
 
-                rm_exists = True if config.get_option("sync", "rm-exists")[
-                                        0] == "T" else False
-                save_orig = True if config.get_option("sync", "save-orig")[
-                                        0] == "T" else False
+                rm_exists = True if config.get_option("sync", "rm-exists").upper() \
+                                    == "TRUE" else False
+                save_orig = True if config.get_option("sync", "save-orig").upper() \
+                                    == "TRUE" else False
+                sleep_time = int(float(config.get_option("daemon", "sleep-time")))
 
-                if self.count_iteration == 0:
-                    fs.sync_disk_priority(rm_exists, save_orig, mes)
+                if self.first_run == True:
+                    fs.sync_disk_priority(rm_exists, save_orig, True)
+                    self.first_run = False
                 else:
-                    fs.sync_local_priority(rm_exists, save_orig, mes)
+                    fs.sync_local_priority(rm_exists, save_orig, True)
 
+                time.sleep(sleep_time)
             except Exception as e:
-                if mes: print(" == " + str(e))
-            finally:
-                try:
-                    if mes: print(
-                        " -- sleep " + config.get_option("daemon",
-                                                         "sleep-time"))
-                    time.sleep(
-                        float(config.get_option("daemon", "sleep-time")))
-                except UnboundLocalError as e:
-                    sys.exit()
-                except:
-                    if mes: print(" == exit")
-                    sys.exit()
-                self.count_iteration += 1
+                print(" == exception " + str(e))
+
+class DaeomonLauncher(object):
+    def start(self):
+        if len(sys.argv) >= 2:
+            sys.argv[1] = "start"
+        elif len(sys.argv) == 0:
+            sys.argv.append("")
+            sys.argv.append("start")
+        else:
+            sys.argv.append("start")
+        self._do_action()
+
+    def stop(self):
+        if len(sys.argv) >= 2:
+            sys.argv[1] = "stop"
+        elif len(sys.argv) == 0:
+            sys.argv.append("")
+            sys.argv.append("stop")
+        else:
+            sys.argv.append("stop")
+        self._do_action()
+
+    def restart(self):
+        if len(sys.argv) >= 2:
+            sys.argv[1] = "restart"
+        elif len(sys.argv) == 0:
+            sys.argv.append("")
+            sys.argv.append("restart")
+        else:
+            sys.argv.append("restart")
+
+        self._do_action()
+
+    def _do_action(self):
+        sync = Synchronizer()
+        daemon_runner = runner.DaemonRunner(sync)
+        daemon_runner.do_action()
 
 
-if __name__ == '__main__':
-    action = sys.argv[1]
-    os.system("notify-send \"begin\"")
 
-    logging.basicConfig(filename=LOG_PATH, level=logging.DEBUG)
-    synchronizer = Synchronizer(pidfile=PID_PATH)
-
-    if action == "start":
-        os.system("notify-send \"is start\"")
-        synchronizer.start()
-
-    elif action == "stop":
-        synchronizer.stop()
-
-    elif action == "restart":
-        synchronizer.restart()

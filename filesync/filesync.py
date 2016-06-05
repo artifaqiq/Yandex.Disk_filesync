@@ -1,10 +1,8 @@
 #!/usr/bin/python3.4
 from client import *
-from config import Configuration
+from synchronizer import *
 
-import sys, subprocess
-
-CONFIG_PATH = ".filesync.conf"
+import sys
 
 def usage():
     print("\n\tusage: " + sys.argv[0] + " command <args...>")
@@ -17,20 +15,13 @@ def usage():
     print("\n\tremove <path>\t\tremove file or dir")
     print("")
 
-
 def main():
     try:
-        if len(sys.argv) >= 2 and sys.argv[1] == "init":
-            try:
-                Configuration.init_config_file(CONFIG_PATH)
-            except Exception as e:
-                print(" == " + str(e))
-            sys.exit()
-        else:
-            conf = Configuration(CONFIG_PATH)
+        if len(sys.argv) >= 2 and sys.argv[1] == "setup":
+            setup()
+        conf = Configuration(CONFIG_PATH)
         if len(sys.argv) == 1:
             usage()
-            return 0
         elif sys.argv[1] == "global" and len(sys.argv) >= 3:
             if sys.argv[2] in ["--set-oauth"] and len(
                     sys.argv) == 4:
@@ -94,13 +85,19 @@ def main():
                     print(" == enter True or False")
             elif sys.argv[2] == "--get-rm-exists":
                 print(" -- " + conf.get_option("sync", "rm-exists"))
-            elif sys.argv[2] == "start" and len(sys.argv) == 3:
-                print(" -- start daemon")
-                subprocess.call("python3.4 daemon.py &")
-            elif sys.argv[2] == "start" and len(sys.argv) == 4 and sys.argv[3] == "mes":
-                print(" -- start daemon")
-                subprocess.call("python3.4 ../src/daemon.py mes &")
 
+        elif len(sys.argv) >= 2 and sys.argv[1] == "start":
+            DaeomonLauncher().start()
+        elif len(sys.argv) >= 2 and sys.argv[1] == "stop":
+            DaeomonLauncher().stop()
+        elif len(sys.argv) >= 2 and sys.argv[1] == "restart":
+            DaeomonLauncher().restart()
+        elif len(sys.argv) >= 2 and sys.argv[1] == "status":
+            if os.path.exists(LOG_PATH):
+                with open(LOG_PATH, "r") as fd:
+                    for line in fd:
+                        pass
+                    print(line)
 
         cli = Client(conf)
         if sys.argv[1] in ["download", "dwnld", "get"] and len(
@@ -170,11 +167,63 @@ def main():
     except configparser.Error as c:
         sys.stderr.write(
             " == config file exception\n == usage: " + sys.argv[
-                0] + " init\n")
+                0] + " setup\n")
     except FileNotFoundError as f:
-        sys.stderr.write(" == usage " + sys.argv[0] + " init\n")
+        sys.stderr.write(" == usage " + sys.argv[0] + " setup\n")
     except Exception as e1:
         sys.stderr.write(" == " + str(e1))
+
+
+
+def setup():
+    try:
+        from os.path import expanduser
+
+        print(" -- If you don't have a Yandex account yet, get one at https://passport.yandex.com/passport?mode=register")
+        print(
+            " -- If you have Yandex account, go to https://oauth.yandex.ru/verification_code?ncrnd=6596#access_token=ARcFkTsAAxRsr1H0O0iQR5m52-_Yz3xJvQ&token_type=bearer&expires_in=31536000 and copy token here")
+
+        while True:
+            sys.stdout.write(" -- Your OAuth token: ")
+            token = input()
+            if len(token) > 30 and len(token) < 35:
+                break
+            print(" == incorrect token")
+
+        default_home_path = expanduser("~") + os.path.sep + "filesync"
+        while True:
+            sys.stdout.write("Enter path to Yandex.Disk folder (Leave empty" +
+                  "to use default folder " + expanduser("~") + os.path.sep + "filesync): ")
+            home_path = input()
+            if len(home_path) == 0:
+                home_path = default_home_path
+                break
+            if os.path.exists(os.path.pardir(home_path)) and os.path.isdir():
+                break
+
+        print("home_path = " + home_path)
+        if os.path.exists(home_path):
+            if os.path.isdir(home_path):
+                shutil.rmtree(home_path)
+            else:
+                os.remove(home_path)
+        os.mkdir(home_path)
+
+        if os.path.exists(APP_OPT_PATH):
+            if os.path.isdir(APP_OPT_PATH):
+                shutil.rmtree(APP_OPT_PATH)
+            else:
+                os.remove(APP_OPT_PATH)
+        os.mkdir(APP_OPT_PATH)
+
+        Configuration.init_config_file(CONFIG_PATH)
+        conf = Configuration(CONFIG_PATH)
+        conf.set_option("daemon", "home-dir", home_path)
+        conf.set_option("disk", "oauth", token)
+
+    except Exception as e:
+        print(" == " + str(e))
+        return
 
 if __name__ == "__main__":
     main()
