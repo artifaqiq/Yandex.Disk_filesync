@@ -150,7 +150,7 @@ class Client:
                 self.upload_file(source_path, dest_path, mes, False)
             else:
                 if mes: print(" -- mkdir " + dest_path)
-                self.disk.create_folder(dest_path)
+                self.disk. create_folder(dest_path)
                 for x in os.listdir(source_path):
                     self.upload_dir_or_file(os.path.join(source_path, x),
                                             dest_path + "/" + x, mes, False)
@@ -182,5 +182,22 @@ class Client:
         except YandexDiskException as e:
             raise e
 
-    def show_fs(self):
-        pass
+    def show_fs(self, path, all=False, depth = 0):
+        try:
+            files = self.disk.get_folder_meta_dict(path)
+        except YandexDiskException as e:
+            raise e
+
+        for x in files['items']:
+            if x['type'] == "file":
+                size = "" if not all else round(x['size'] / 1024, 1)
+                if not size == "":
+                    if size > 1000:
+                        size = round(size /1024, 1)
+                        size = str(size) + " MB"
+                    else:
+                        size = str(size) + " KB"
+                print((" " * 3 * depth) + x['name'] + ((60 - depth * 3 - len(x['name'])) * " ") + " " + size)
+            else:
+                print((" " * 3 * depth) + x['name'] + "/")
+                self.show_fs(x['path'], all, depth + 1)

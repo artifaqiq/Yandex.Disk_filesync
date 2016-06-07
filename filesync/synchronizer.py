@@ -1,5 +1,5 @@
 #!/usr/bin/python3.4
-import sys, os, sys, logging, time, atexit
+import os, sys, logging, time
 
 from client import Client
 from filesys import FileSystemImage
@@ -9,16 +9,18 @@ import codecs
 
 APP_OPT_PATH = os.path.join(os.environ['HOME'], ".filesync")
 CONFIG_PATH = os.path.join(APP_OPT_PATH, "config.ini")
-LOG_PATH = os.path.join(APP_OPT_PATH, "synchronizer.log")
-PID_PATH = os.path.join(APP_OPT_PATH, "synchronizer.pid")
+DAEMON_LOG_PATH = os.path.join(APP_OPT_PATH, "daemon.log")
+DAEMON_PID_PATH = os.path.join(APP_OPT_PATH, "daemon.pid")
+LOG_PATH = os.path.join(APP_OPT_PATH, "sync.log")
 
+NO_NETWORK_EXCEPTION_SLEEP = 10
 
 class Synchronizer(object):
     def __init__(self):
-        self.stdin_path = '/dev/null'
-        self.stdout_path = LOG_PATH
-        self.stderr_path = LOG_PATH
-        self.pidfile_path = PID_PATH
+        self.stdin_path = '/dev/null' if not "win" in sys.platform else "Nul"
+        self.stdout_path = DAEMON_LOG_PATH
+        self.stderr_path = DAEMON_LOG_PATH
+        self.pidfile_path = DAEMON_PID_PATH
         self.pidfile_timeout = 5
 
         self.encoder = codecs.getencoder('utf-8')
@@ -33,21 +35,26 @@ class Synchronizer(object):
                                      config.get_option("daemon", "app-dir"),
                                      client)
 
-                rm_exists = True if config.get_option("sync", "rm-exists").upper() \
+                rm_exists = True if config.get_option("sync",
+                                                      "rm-exists").upper() \
                                     == "TRUE" else False
-                save_orig = True if config.get_option("sync", "save-orig").upper() \
+                save_orig = True if config.get_option("sync",
+                                                      "save-orig").upper() \
                                     == "TRUE" else False
-                sleep_time = int(float(config.get_option("daemon", "sleep-time")))
+                sleep_time = int(
+                    float(config.get_option("daemon", "sleep-time")))
 
                 if self.first_run == True:
-                    fs.sync_disk_priority(rm_exists, save_orig, True)
+                    fs.sync_disk_priority(rm_exists, save_orig)
                     self.first_run = False
                 else:
-                    fs.sync_local_priority(rm_exists, save_orig, True)
-
-                time.sleep(sleep_time)
+                    fs.sync_local_priority(rm_exists, save_orig)
             except Exception as e:
-                print(" == exception " + str(e))
+                print(str(e))
+                time.sleep(NO_NETWORK_EXCEPTION_SLEEP)
+            finally:
+                time.sleep(sleep_time)
+
 
 class DaeomonLauncher(object):
     def start(self):
@@ -82,9 +89,14 @@ class DaeomonLauncher(object):
         self._do_action()
 
     def _do_action(self):
+        logging.basicConfig(filename=LOG_PATH,
+                            format=u'[%(asctime)s] %(message)s',
+                            level=logging.ERROR)
+
+        fhdl = logging.FileHandler(LOG_PATH)
+        logging.getLogger().addHandler(fhdl)
+
         sync = Synchronizer()
         daemon_runner = runner.DaemonRunner(sync)
+        daemon_runner.daemon_context.files_preserve = [fhdl.stream]
         daemon_runner.do_action()
-
-
-

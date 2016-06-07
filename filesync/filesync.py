@@ -4,16 +4,45 @@ from synchronizer import *
 
 import sys
 
+
 def usage():
-    print("\n\tusage: " + sys.argv[0] + " command <args...>")
-    print("\n\thelp\t\tshow this message")
-    print("\n\tdownload <path>\t\tdownload file")
-    print("\n\tupload <path>\t\tupload file")
-    print("\n\tinfo\t\tshow disk meta info")
-    print("\n\tmkdir <path>\t\tmake directory on disk")
-    print("\n\tcopy <source_path> <dest_path>\t\tcopy file")
-    print("\n\tremove <path>\t\tremove file or dir")
+    print("\tusage: " + sys.argv[0] + " command <args...>")
+    print("\n\tsetup\t\t\t\t\tinitial configuration\n")
+    print("\n\thelp\t\t\t\t\tshow this message")
+    print("\tinfo\t\t\t\t\tshow disk meta info")
+    print("\tdownload <path>\t\t\t\tdownload file")
+    print("\tupload <path>\t\t\t\tupload file")
+    print("\tmkdir <path>\t\t\t\tmake directory on disk")
+    print("\tcopy <source> <dest>\t\t\tcopy file")
+    print("\tremove <path>\t\t\t\tremove file or dir")
+    print("\tmove <source> <dest>\t\t\tmove from source to dest")
+    print("\tls <path>\t\t\t\tlist files")
     print("")
+
+    print("\tstart\t\t\t\t\tstart sync daemon")
+    print("\tstop\t\t\t\t\tstop sync daemon")
+    print("\tstatus\t\t\t\t\tshow last sync files")
+    print("")
+
+    print("\tglobal")
+    print("\t\t--set-oauth <new-token>\t\tset OAuth token")
+    print("\t\t--get-oauth \t\t\tsee OAuth token")
+    print("\t\t--set-daemon-sleep-time <sec>\tset sync-daemon sleep time")
+    print("\t\t--get-daemon-sleep-time\t\tget sync-daemon sleep time")
+    print("\t\t--set-home-dir <path>\t\tset sync home dir")
+    print("\t\t--get-home-dir <path>\t\tget sync home dir")
+    print("\t\t--set-app-dir <path>\t\tset application directory on disk")
+    print(
+        "\t\t--get-app-dir <path>\t\tget path to application directory on disk")
+    print("")
+
+    print("\tsync")
+    print("\t\t--set-save-orig <true/false>\tsave " +
+          "the conflicting files with the extension \"*.orig\"")
+    print("\t\t--get-save-orig")
+    print("\t\t--set-rm-exists <true/false>\tremove files do not conflict")
+    print("\t\t--get-rm-exists")
+
 
 def main():
     try:
@@ -59,7 +88,13 @@ def main():
                     " -- app-dir : " + conf.get_option("daemon", "app-dir"))
 
             elif len(sys.argv) == 4 and sys.argv[2] in ["--set-home-dir"]:
-                conf.set_option("daemon", "home-dir", sys.argv[3])
+                if not os.path.exists(sys.argv[3]):
+                    print(" == " + sys.argv[3] + " doens't exists")
+                elif not os.path.isdir(sys.argv[3]):
+                    print(" == " + sys.argv[3] + " is not a directory")
+                else:
+                    conf.set_option("daemon", "home-dir", sys.argv[3])
+                    DaeomonLauncher().restart()
             elif len(sys.argv) == 3 and sys.argv[2] in ["--get-home-dir"]:
                 print(
                     " -- app-dir : " + conf.get_option("daemon", "home-dir"))
@@ -93,11 +128,13 @@ def main():
         elif len(sys.argv) >= 2 and sys.argv[1] == "restart":
             DaeomonLauncher().restart()
         elif len(sys.argv) >= 2 and sys.argv[1] == "status":
-            if os.path.exists(LOG_PATH):
+            if os.path.exists(DAEMON_LOG_PATH):
                 with open(LOG_PATH, "r") as fd:
-                    for line in fd:
-                        pass
-                    print(line)
+                    lines = fd.readlines()
+            sys.stdout.write(" -- last sync files: \n\n")
+            for line in lines[-10:]:
+                sys.stdout.write(" -- " + line)
+            print("")
 
         cli = Client(conf)
         if sys.argv[1] in ["download", "dwnld", "get"] and len(
@@ -150,38 +187,69 @@ def main():
             print(" -- " + sys.argv[2] + " successfully created")
         elif sys.argv[1] in ["cp", "cpy", "copy"] and len(sys.argv) == 4:
             cli.cp(sys.argv[2], sys.argv[3])
-        elif sys.argv[1] in ["ls"] and len(sys.argv) == 3:
+        elif len(sys.argv) == 3 and sys.argv[1] in ["ls"]:
             files = cli.disk.get_content_of_folder(
-                sys.argv[2]).get_children()
-            for f in files:
-                print(" -- " + f.name + (
-                    "/" if type(f) is Directory else ""))
+                sys.argv[2])
+            if (files.type != 'dir'):
+                print(" == " + sys.argv[2] + " is not a directory")
+            else:
+                for f in files.get_children():
+                    print(" -- " + f.name + (
+                        "/" if type(f) is Directory else ""))
         elif sys.argv[1] in ["ls"] and len(sys.argv) == 2:
-            cli.show_fs()
+            print(" -- /")
+            cli.show_fs("/", all=False, depth=2)
+        elif len(sys.argv) == 4 and sys.argv[1] == "ls":
+            if not cli.disk.get_content_of_folder(sys.argv[3]).type == "dir":
+                print(" == " + sys.argv[3] + " is not a directory")
+            elif sys.argv[2][0] == "-":
+                rec = "r" in sys.argv[2]
+                all = "a" in sys.argv[2]
+                if rec:
+                    print(" -- " + sys.argv[3])
+                    cli.show_fs(sys.argv[3], all, depth=2)
+                else:
+                    files = cli.disk.get_content_of_folder(
+                        sys.argv[3])
+                    for f in files.get_children():
+                        if type(f) is Directory:
+                            print(" -- " + f.name + "/")
+                        else:
+                            size = round(f.size / 1024, 1)
+                            if size > 1000:
+                                size = round(size / 1024, 1)
+                                size = str(size) + " MB"
+                            else:
+                                size = str(size) + " KB"
+                            print(" -- " + f.name + ((40 - len(f.name)) * " ") + size)
+
+
         elif sys.argv[1] in ["move", "mov"] and len(sys.argv) == 4:
-            cli.move(sys.argv[2], sys.argv[3])
+            cli.move(sys.argv[2], sys.argv[3], True)
         elif sys.argv[1] in ["help"] and len(sys.argv) == 2:
             usage()
+
     except YandexDiskException as e:
         sys.stderr.write(" == " + str(e) + "\n")
     except configparser.Error as c:
         sys.stderr.write(
-            " == config file exception\n == usage: " + sys.argv[
+            " == config file error\n == usage: " + sys.argv[
                 0] + " setup\n")
     except FileNotFoundError as f:
         sys.stderr.write(" == usage " + sys.argv[0] + " setup\n")
     except Exception as e1:
-        sys.stderr.write(" == " + str(e1))
-
+        print(type(e1))
+        sys.stderr.write(" == no internet connection\n")
 
 
 def setup():
     try:
         from os.path import expanduser
 
-        print(" -- If you don't have a Yandex account yet, get one at https://passport.yandex.com/passport?mode=register")
         print(
-            " -- If you have Yandex account, go to https://oauth.yandex.ru/verification_code?ncrnd=6596#access_token=ARcFkTsAAxRsr1H0O0iQR5m52-_Yz3xJvQ&token_type=bearer&expires_in=31536000 and copy token here")
+            " -- if you don't have a Yandex account yet, get one at https://passport.yandex.com/passport?mode=register")
+        print(
+            " -- if you have Yandex account, go to https://oauth.yandex.ru/verification_code?ncrnd=6596#access_token=ARcFkTsAAxRsr1H0O0iQR5m52-_Yz3xJvQ&token_type=bearer&expires_in=31536000 and copy token here")
 
         while True:
             sys.stdout.write(" -- Your OAuth token: ")
@@ -192,8 +260,10 @@ def setup():
 
         default_home_path = expanduser("~") + os.path.sep + "filesync"
         while True:
-            sys.stdout.write("Enter path to Yandex.Disk folder (Leave empty" +
-                  "to use default folder " + expanduser("~") + os.path.sep + "filesync): ")
+            sys.stdout.write(
+                " -- enter path to Yandex.Disk folder (Leave empty" +
+                "to use default folder " + expanduser(
+                    "~") + os.path.sep + "filesync): ")
             home_path = input()
             if len(home_path) == 0:
                 home_path = default_home_path
@@ -201,7 +271,6 @@ def setup():
             if os.path.exists(os.path.pardir(home_path)) and os.path.isdir():
                 break
 
-        print("home_path = " + home_path)
         if os.path.exists(home_path):
             if os.path.isdir(home_path):
                 shutil.rmtree(home_path)
@@ -224,6 +293,7 @@ def setup():
     except Exception as e:
         print(" == " + str(e))
         return
+
 
 if __name__ == "__main__":
     main()

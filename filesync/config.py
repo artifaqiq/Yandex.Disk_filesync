@@ -1,4 +1,4 @@
-import configparser, os, sys
+import configparser, os
 
 class Configuration():
     def __init__(self, path_to_config):
