@@ -215,13 +215,13 @@ def main():
                         if type(f) is Directory:
                             print(" -- " + f.name + "/")
                         else:
-                            size = round(f.size / 1024, 1)
+                            size = round(f.size / 1024 + .1, 1)
                             if size > 1000:
-                                size = round(size / 1024, 1)
+                                size = round(size / 1024 + .1, 1)
                                 size = str(size) + " MB"
                             else:
                                 size = str(size) + " KB"
-                            print(" -- " + f.name + ((40 - len(f.name)) * " ") + size)
+                            print(" -- " + f.name + " " + ((40 - len(f.name)) * " ") + size)
 
 
         elif sys.argv[1] in ["move", "mov"] and len(sys.argv) == 4:
@@ -238,8 +238,7 @@ def main():
     except FileNotFoundError as f:
         sys.stderr.write(" == usage " + sys.argv[0] + " setup\n")
     except Exception as e1:
-        print(type(e1))
-        sys.stderr.write(" == no internet connection\n")
+        sys.stderr.write(" == no internet connection\n ")
 
 
 def setup():
@@ -288,7 +287,8 @@ def setup():
         try:
             cli = Client(conf)
             cli.mkdir(conf.get_option("daemon", "app-dir"))
-        except: pass
+        except YandexDiskException as e:
+            pass
         print("Setup was successful")
     except Exception as e:
         print(" == " + str(e))

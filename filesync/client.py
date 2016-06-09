@@ -171,7 +171,7 @@ class Client:
             self.disk.copy_folder_or_file(source_path, dest_path)
             if mes: print(
                 " -- " + source_path + " successfully copied to " + dest_path)
-        except YandexDiskRestClient as e:
+        except YandexDiskException as e:
             raise e
 
     def move(self, source_path, dest_path, mes=False):
