@@ -10,13 +10,13 @@ def usage():
     print("\n\tsetup\t\t\t\t\tinitial configuration\n")
     print("\n\thelp\t\t\t\t\tshow this message")
     print("\tinfo\t\t\t\t\tshow disk meta info")
-    print("\tdownload <path>\t\t\t\tdownload file")
-    print("\tupload <path>\t\t\t\tupload file")
+    print("\tdownload [-rm] <path>\t\t\tdownload file")
+    print("\tupload [-rm] <path>\t\t\tupload file")
     print("\tmkdir <path>\t\t\t\tmake directory on disk")
     print("\tcopy <source> <dest>\t\t\tcopy file")
     print("\tremove <path>\t\t\t\tremove file or dir")
     print("\tmove <source> <dest>\t\t\tmove from source to dest")
-    print("\tls <path>\t\t\t\tlist files")
+    print("\tls [-sr] <path>\t\t\t\tlist files")
     print("")
 
     print("\tstart\t\t\t\t\tstart sync daemon")
@@ -97,7 +97,7 @@ def main():
                     DaeomonLauncher().restart()
             elif len(sys.argv) == 3 and sys.argv[2] in ["--get-home-dir"]:
                 print(
-                    " -- app-dir : " + conf.get_option("daemon", "home-dir"))
+                    " -- home-dir : " + conf.get_option("daemon", "home-dir"))
             sys.exit()
 
         elif len(sys.argv) >= 3 and sys.argv[1] == "sync":
@@ -204,10 +204,10 @@ def main():
                 print(" == " + sys.argv[3] + " is not a directory")
             elif sys.argv[2][0] == "-":
                 rec = "r" in sys.argv[2]
-                all = "a" in sys.argv[2]
+                s = "s" in sys.argv[2]
                 if rec:
                     print(" -- " + sys.argv[3])
-                    cli.show_fs(sys.argv[3], all, depth=2)
+                    cli.show_fs(sys.argv[3], s, depth=2)
                 else:
                     files = cli.disk.get_content_of_folder(
                         sys.argv[3])
@@ -247,21 +247,17 @@ def setup():
         from os.path import expanduser
 
         print(
-            " -- if you don't have a Yandex account yet, get one at https://passport.yandex.com/passport?mode=register")
+            "If you don't have a Yandex account yet, get one at \nhttps://passport.yandex.com/passport?mode=register")
         print(
-            " -- if you have Yandex account, go to https://oauth.yandex.ru/verification_code?ncrnd=6596#access_token=ARcFkTsAAxRsr1H0O0iQR5m52-_Yz3xJvQ&token_type=bearer&expires_in=31536000 and copy token here")
+            "If you have Yandex account, go to\nhttps://oauth.yandex.ru/verification_code?ncrnd=6596#access_token=ARcFkTsAAxRsr1H0O0iQR5m52-_Yz3xJvQ&token_type=bearer&expires_in=31536000\nand copy token here")
 
-        while True:
-            sys.stdout.write(" -- Your OAuth token: ")
-            token = input()
-            if len(token) > 30 and len(token) < 35:
-                break
-            print(" == incorrect token")
+        sys.stdout.write("Enter your OAuth token : ")
+        token = input()
 
         default_home_path = expanduser("~") + os.path.sep + "filesync"
         while True:
             sys.stdout.write(
-                " -- enter path to Yandex.Disk folder (Leave empty" +
+                "Enter path to Yandex.Disk folder (leave empty " +
                 "to use default folder " + expanduser(
                     "~") + os.path.sep + "filesync): ")
             home_path = input()
@@ -289,7 +285,11 @@ def setup():
         conf = Configuration(CONFIG_PATH)
         conf.set_option("daemon", "home-dir", home_path)
         conf.set_option("disk", "oauth", token)
-
+        try:
+            cli = Client(conf)
+            cli.mkdir(conf.get_option("daemon", "app-dir"))
+        except: pass
+        print("Setup was successful")
     except Exception as e:
         print(" == " + str(e))
         return
